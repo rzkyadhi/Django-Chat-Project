@@ -11,11 +11,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <h2><center>{{room}} Chat Messages !</center></h2>
-    <div class="container">
-        <h4>Hello. How are you today?</h4>
-        <span class="time-right">11:00</span>
-      </div>
+    <h2 style="text-transform: capitalize;"><center>{{room}} Chat Messages !</center></h2>
+    <div class="container" id="display">
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+        setInterval(function(){
+            $.ajax({
+                type: 'GET',
+                url : "/getMessages/{{room}}/",
+                success: function(response){
+                    //console.log(response);
+                    $("#display").empty();
+                    for (var key in response.messages)
+                    {
+                        var temp="<div class='container darker'><b>"+response.messages[key].user+"</b><p>"+response.messages[key].content+"</p><span class='time-left'>"+response.messages[key].date+"</span></div>";
+                        $("#display").append(temp);
+                    }
+                },
+                error: function(response){
+                    alert('An error occured')
+                }
+            });
+        },1000);
+        })
+    </script>
 
     <div class="container-form">
         <form action="" id="message-form">
