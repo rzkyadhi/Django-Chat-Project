@@ -8,21 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/roomstyle.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <h2>Room Chat Messages !</h2>
+    <h2><center>{{room}} Chat Messages !</center></h2>
     <div class="container">
         <h4>Hello. How are you today?</h4>
         <span class="time-right">11:00</span>
       </div>
 
-      <div class="container-form">
-        <form action="">
-            <input type="hidden" name="Username" id="Username">
-            <input type="hidden" name="RoomCode" id="RoomCode">
-            <input type="text" name="message" id="message" width="100px">
+    <div class="container-form">
+        <form action="" id="message-form">
+            {% csrf_token %}
+            <input type="hidden" name="username" id="Username" value="{{username}}">
+            <input type="hidden" name="roomcode" id="RoomCode" value="{{room_details.id}}">
+            <input type="text" name="content" id="content" width="100px">
             <input type="submit" value="send">
         </form>
-        </div>
+    </div>
+    <script src="{% static 'javascript/app.js' %}"></script>
 </body>
 </html>
